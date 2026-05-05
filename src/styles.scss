@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+
+body {
+  margin: 0;
+}
+
+.todo-app {
+  text-align: center;
+  width: 800px;
+  margin: 0 auto;
+}
+
+a {
+  padding-right: 0.5rem;
+  text-decoration: none;
+  color: blue;
+}
+
+button {
+  margin: 0.25rem;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.active-filter {
+  font-weight: bold;
+}
+
+.completed {
+  text-decoration: line-through;
+}
+
+.active-link {
+  font-weight: bold;
+  text-decoration: underline;
+}

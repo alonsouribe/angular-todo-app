@@ -1,0 +1,34 @@
+<h3>Classic Tasks</h3>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <input id="new-task" formControlName="title" placeholder="New task" />
+  <button type="submit" [disabled]="form.invalid">Add</button>
+</form>
+
+<p>
+  Total: {{ taskService.total }} |
+  Actives: {{ taskService.active }} |
+  Completed: {{ taskService.completed }}
+</p>
+
+<div>
+  @for (filter of filters; track filter) {
+    <button
+      (click)="taskService.setFilter(filter)"
+      [class.active-filter]="taskService.filter === filter">
+      {{ filter }}
+    </button>
+  }
+</div>
+
+<ul>
+  @for (task of taskService.filteredTasks; track task.id) {
+    <li>
+      <input type="checkbox" [checked]="task.completed" (change)="taskService.toggle(task.id)" />
+      <span [class.completed]="task.completed">{{ task.title }}</span>
+      <button (click)="taskService.remove(task.id)">✕</button>
+    </li>
+  } @empty {
+    <p>No tasks</p>
+  }
+</ul>

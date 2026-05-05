@@ -1,0 +1,36 @@
+<h3>Tasks RxJS</h3>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <input id="new-task" formControlName="title" placeholder="New task" />
+    <button type="submit" [disabled]="form.invalid">Add</button>
+  </form>
+
+  <p>
+    Total: {{ taskRxJSService.total$ | async }} |
+    Actives: {{ taskRxJSService.active$ | async }} |
+    Completed: {{ taskRxJSService.completed$ | async }}
+  </p>
+
+  <div>
+    @for (filter of filters; track filter) {
+      <button
+        (click)="taskRxJSService.setFilter(filter)"
+        [class.active-filter]="(taskRxJSService.filter | async) === filter">
+        {{ filter }}
+      </button>
+    }
+  </div>
+
+  @if (taskRxJSService.filteredTasks$ | async; as tasks) {
+    <ul>
+      @for (task of tasks; track task.id) {
+        <li>
+          <input type="checkbox" [checked]="task.completed" (change)="taskRxJSService.toggle(task.id)" />
+          <span [class.completed]="task.completed">{{ task.title }}</span>
+          <button (click)="taskRxJSService.remove(task.id)">✕</button>
+        </li>
+      } @empty {
+        <p>No tasks.</p>
+      }
+    </ul>
+  }

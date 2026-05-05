@@ -1,0 +1,35 @@
+<h3>Tasks Signals</h3>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <input id="new-task" formControlName="title" placeholder="New task" />
+  <button type="submit" [disabled]="form.invalid">Add</button>
+</form>
+
+<p>
+  Total: {{ taskSignalsService.total() }} |
+  Actives: {{ taskSignalsService.active() }} |
+  Completed: {{ taskSignalsService.completed() }}
+</p>
+
+
+<div>
+  @for (filter of filters; track filter) {
+    <button
+      (click)="taskSignalsService.setFilter(filter)"
+      [class.active-filter]="taskSignalsService.filter() === filter">
+      {{ filter }}
+    </button>
+  }
+</div>
+
+<ul>
+  @for (task of taskSignalsService.filteredTasks(); track task.id) {
+    <li>
+      <input type="checkbox" [checked]="task.completed" (change)="taskSignalsService.toggle(task.id)" />
+      <span [class.completed]="task.completed">{{ task.title }}</span>
+      <button (click)="taskSignalsService.remove(task.id)">✕</button>
+    </li>
+  } @empty {
+    <p>No tasks.</p>
+  }
+</ul>
